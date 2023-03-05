@@ -5,9 +5,11 @@ import { getAuth } from "firebase/auth";
 import { Platform } from "react-native";
 import {
   Firestore,
+  enableIndexedDbPersistence,
   getFirestore,
   initializeFirestore,
 } from "firebase/firestore";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -17,26 +19,47 @@ import {
 
 // turn into env var
 const firebaseConfig = {
-  apiKey: "AIzaSyB0VndKfVu7cQpN0Ikc1yDZ89-Yv1cl5eU",
-  authDomain: "linkup-eb05b.firebaseapp.com",
-  projectId: "linkup-eb05b",
-  storageBucket: "linkup-eb05b.appspot.com",
-  messagingSenderId: "695161353202",
-  appId: "1:695161353202:web:9f1b25ac8b3ef47792716b",
-  measurementId: "G-2VG9G1B7HX"
+  apiKey: "AIzaSyA7o3ZpM_LFyMhmUUznIxyMRrCLds96zSI",
+  authDomain: "linkup-62dd9.firebaseapp.com",
+  projectId: "linkup-62dd9",
+  storageBucket: "linkup-62dd9.appspot.com",
+  messagingSenderId: "667141008081",
+  appId: "1:667141008081:web:e1fe9405327315a66773f0",
+  measurementId: "G-JM9XHZR3KM"
 };
 
 var db: Firestore;
+
 
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+
+
+
 Platform.OS !== "ios"
   ? (db = initializeFirestore(app, {
     experimentalForceLongPolling: true,
   }))
   : (db = getFirestore(app));
 
-export {auth, db, analytics}
+
+// enableIndexedDbPersistence(db)
+//   .catch((err) => {
+//     if (err.code == 'failed-precondition') {
+//       // Multiple tabs open, persistence can only be enabled
+//       // in one tab at a a time.
+//       // ...
+//     } else if (err.code == 'unimplemented') {
+//       // The current browser does not support all of the
+//       // features required to enable persistence
+//       // ...
+//     }
+//   });
+
+
+
+
+export { auth, db }

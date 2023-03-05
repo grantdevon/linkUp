@@ -15,8 +15,9 @@ const Login = () => {
         signUp(email, password)
     }
     return (
-        <View>
+        <View style={styles.container}>
             <TextInput
+                style={styles.authContainer}
                 value={email}
                 onChangeText={email => setEmail(email)}
                 placeholder='email'
@@ -24,6 +25,7 @@ const Login = () => {
 
             </TextInput>
             <TextInput
+                style={styles.authContainer}
                 value={password}
                 onChangeText={password => setPassword(password)}
                 placeholder='password'
@@ -32,14 +34,14 @@ const Login = () => {
             </TextInput>
 
             <TouchableOpacity
-            onPress={loginUser}>
-                <Text>
+                onPress={loginUser}>
+                <Text style={styles.text}>
                     Login
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={signUpUser}>
-                <Text>
+                onPress={signUpUser}>
+                <Text style={styles.text}>
                     Sign Up
                 </Text>
             </TouchableOpacity>
@@ -54,5 +56,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    authContainer: {
+        borderWidth: 1,
+        width: "80%"
+    },
+    text: {
+        fontSize: 35,
+        fontWeight: 'bold'
     }
 })
