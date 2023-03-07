@@ -1,20 +1,22 @@
-import { FlatList, StyleSheet, Text, View, Modal, TextInput, RefreshControl, ScrollView, Switch } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Modal, TextInput, RefreshControl, ScrollView, Switch, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../../Firebase/firebase.config'
 import { fetchSubCollection } from '../../Sevices/firestore.service'
 import FAB from 'react-native-fab'
 import AddLink from './AddLink'
-import LinksComponent from './Links.component'
 import LinkToggle from './LinkToggle.component'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserDetails } from '../../redux/reducers/user.reducer'
 import { fetchUserLinks } from '../../redux/reducers/links.reducer'
+import { Link } from '../../Interfaces/Link.interface'
+import { Skeleton } from '@rneui/base'
 
 const Links = () => {
 
   const [addLinkModal, setAddLinkModal] = useState<boolean>(false)
   const [refreshing, setRefreshing] = useState(false);
   const [toggle, setToggle] = useState<boolean>(false)
+  const [link, setLink] = useState<Link>({})
 
   let id = auth.currentUser?.uid
 
@@ -38,10 +40,17 @@ const Links = () => {
     }, 3000);
   }, []);
 
+  const editLink = (link: Link) => {
+    setLink(link)
+    setAddLinkModal(true)
+  }
+
 
   const linksComponent = ({ item }) => {
     return (
-      <View style={styles.linkContainer}>
+      <TouchableOpacity style={styles.linkContainer}
+        onPress={() => editLink(item)}
+      >
           <View style={styles.linkData}>
             <Text style={styles.linkHeader}>
               {item.name}
@@ -65,7 +74,7 @@ const Links = () => {
           </View>
 
 
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -73,7 +82,7 @@ const Links = () => {
     // TODO add better styling
     return (
       <View>
-        <Text>Loading</Text>
+        <Skeleton width={120} height={40} />
       </View>
     )
   }
@@ -89,6 +98,8 @@ const Links = () => {
           <AddLink
             setAddLinkModal={setAddLinkModal}
             refresh={onRefresh}
+            editlink={link}
+            setEditLink={setLink}
           />
         </Modal>
       </View>

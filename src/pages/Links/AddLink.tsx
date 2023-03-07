@@ -1,13 +1,16 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import uuid from 'react-native-uuid';
 import { Link } from '../../Interfaces/Link.interface';
 import { updateDocument } from '../../Sevices/firestore.service';
 import { auth } from '../../Firebase/firebase.config';
 
+
 const AddLink = ({
     setAddLinkModal,
-    refresh
+    refresh,
+    editlink,
+    setEditLink,
 }) => {
 
     const [link, setLink] = useState<Link>({
@@ -16,23 +19,50 @@ const AddLink = ({
         id: uuid.v4(),
         isActive: true
     })
+    console.log(link);
+
 
     const addLink = () => {
+        
+        
         // TODO: add better validation
         if (link.name?.length > 0 && link.url?.length > 0) {
             let id = auth.currentUser?.uid
-            console.log(link)
+
+            if (!link.isActive && !link.id) {
+                link.isActive = true
+                link.id = uuid.v4()
+            }
             updateDocument(id, "links", link).then(() => {
                 console.log("created new link")
                 setAddLinkModal(false)
+                setEditLink({})
                 refresh()
             }).catch(error => {
                 console.log(error)
+                setEditLink({})
                 setAddLinkModal(false)
             })
         }
 
     }
+
+    const onClose = () => {
+        setEditLink({})
+        setAddLinkModal(false)
+    }
+
+    useEffect(() => {  
+        
+        
+
+        if (editlink) {
+            setLink(editlink)
+        } 
+        console.log("editlink: ", editlink);
+
+
+    }, [])
 
 
     return (
@@ -81,7 +111,7 @@ const AddLink = ({
                 borderWidth: 0
             }]}>
             <TouchableOpacity
-                onPress={() => setAddLinkModal(false)}
+                onPress={onClose}
             >
                 <Text style={styles.actionButtonText}>Cancel</Text>
             </TouchableOpacity>
