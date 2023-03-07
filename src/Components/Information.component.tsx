@@ -13,13 +13,13 @@ const Information = ({
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <Text style={styles.textContent}>{links.length}</Text>
+                <Text style={styles.textContent}>{friends.length}</Text>
                 <Text style={styles.textContent}>Friends</Text>
 
             </View>
 
             <View style={styles.contentContainer}>
-                <Text style={styles.textContent}>{friends.length}</Text>
+                <Text style={styles.textContent}>{links.length}</Text>
                 <Text style={styles.textContent}>Links</Text>
 
             </View>
