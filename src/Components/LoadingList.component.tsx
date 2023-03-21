@@ -4,7 +4,7 @@ import React from 'react'
 const LoadingList = () => {
   return (
     <View>
-      <Text>LoadingList.component</Text>
+      <Text>LoadingList</Text>
     </View>
   )
 }

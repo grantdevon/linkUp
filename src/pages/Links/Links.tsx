@@ -93,7 +93,6 @@ const Links = () => {
         <Modal
           visible={addLinkModal}
           animationType='slide'
-
         >
           <AddLink
             setAddLinkModal={setAddLinkModal}

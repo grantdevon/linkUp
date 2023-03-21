@@ -23,9 +23,6 @@ const AddLink = ({
 
 
     const addLink = () => {
-        
-        
-        // TODO: add better validation
         if (link.name?.length > 0 && link.url?.length > 0) {
             let id = auth.currentUser?.uid
 
@@ -44,7 +41,6 @@ const AddLink = ({
                 setAddLinkModal(false)
             })
         }
-
     }
 
     const onClose = () => {
@@ -52,13 +48,13 @@ const AddLink = ({
         setAddLinkModal(false)
     }
 
-    useEffect(() => {  
-        
-        
+    useEffect(() => {
+
+
 
         if (editlink) {
             setLink(editlink)
-        } 
+        }
         console.log("editlink: ", editlink);
 
 
@@ -74,7 +70,7 @@ const AddLink = ({
                     style={styles.input}
                     placeholder='name'
                     value={link.name}
-                    placeholderTextColor={"#565657"}    
+                    placeholderTextColor={"#565657"}
                     onChangeText={name => {
                         let obj: Link = { ...link }
                         obj.name = name
@@ -100,26 +96,26 @@ const AddLink = ({
             <View style={[styles.actionButtons, {
                 marginTop: 50
             }]}>
-            <TouchableOpacity
-                onPress={addLink}   
-            >
-                <Text style={styles.actionButtonText}>Add Link</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={addLink}
+                >
+                    <Text style={styles.actionButtonText}>Add Link</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={[styles.actionButtons, {
                 borderWidth: 0
             }]}>
-            <TouchableOpacity
-                onPress={onClose}
-            >
-                <Text style={styles.actionButtonText}>Cancel</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={onClose}
+                >
+                    <Text style={styles.actionButtonText}>Cancel</Text>
+                </TouchableOpacity>
             </View>
 
-            
 
-            
+
+
         </View>
     )
 }

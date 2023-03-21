@@ -4,6 +4,7 @@ import { createDoc } from "./firestore.service";
 import { Users } from "../Constants/collectionNames";
 import { storeUser } from "./storage.service";
 import { fetchUser } from "./user.service";
+import { Alert } from "react-native";
 
 
 export const login = (email: string, password: string) => {
@@ -13,19 +14,19 @@ export const login = (email: string, password: string) => {
         // store details in storage
     }).catch(error => {
         console.log(error);
+        Alert.alert(error.code)
         throw new Error(error)
     })
 }
 
-export const signUp = (email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password).then(user => {
-
+export const signUp = (userObj: any) => {
+    createUserWithEmailAndPassword(auth, userObj.email, userObj.password).then(user => {
 
         const newUser: {} = {
-            name: "Grant",
+            name: userObj.name,
             email: user.user.email,
             date_created: new Date(),
-            note: "",
+            note: userObj.note,
             id: user.user.uid
         }
 
@@ -45,6 +46,7 @@ export const signUp = (email: string, password: string) => {
 
     }).catch(error => {
         console.log(error);
+        Alert.alert(error.code)
         throw new Error(error)
     })
 }

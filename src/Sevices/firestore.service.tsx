@@ -29,14 +29,6 @@ export const fetchSubCollection = async (id: string, collectionName: string) => 
         dataArray.push(doc.data())
     })
     return dataArray
-    // return (data.)
-    // return new Promise(async (resolve, reject) => {
-    //     let data = await getDocs(collection(db, "users", id, collectionName))
-    //     data.forEach((doc) => {
-    //         dataArray.push(doc.data())
-    //     })        
-    //     resolve(dataArray)
-    // })
 }
 
 export const updateDocument = (id: string, collectionName: string, data: any) => {
