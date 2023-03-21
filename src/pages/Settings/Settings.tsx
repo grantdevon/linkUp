@@ -16,28 +16,45 @@ const Settings = () => {
         },
         {
           text: "No",
-          onPress: () => {}
+          onPress: () => { }
         }
       ]
-      
+
+    )
+  }
+
+  const BasicInfo = (
+    { message, text, onPress }:
+      {
+        message: string,
+        text: string,
+        onPress: () => void
+      }
+  ) => {
+    return (
+      <>
+        <Text style={styles.signOutHeader}>{message}</Text>
+        <View style={styles.signOutButton}>
+          <Text style={styles.signOutText} onPress={onPress}>{text}</Text>
+        </View>
+      </>
     )
   }
   return (
     <View>
+      <Information />
+      <BasicInfo
+        message='Im just trying to make enough money so that my girlfriend
+      can live her rich girl fantasy'
+        text='Buy me a coffee'
+        onPress={signOut}
+      />
 
-      <Information/>
-
-      <Text style={styles.signOutHeader}>Im just trying to make enough money so that my girlfriend
-      can live her rich girl fantasy.</Text>
-      <View style={styles.signOutButton}>
-        <Text style={styles.signOutText} onPress={signOut}>Buy me a coffee</Text>
-      </View>
-
-
-      <Text style={styles.signOutHeader}>You want to leave?? k.</Text>
-      <View style={styles.signOutButton}>
-        <Text style={styles.signOutText} onPress={signOut}>Sign out</Text>
-      </View>
+      <BasicInfo
+        message='You want to leave?? k.'
+        text='Sign out'
+        onPress={signOut}
+      />
     </View>
   )
 }
