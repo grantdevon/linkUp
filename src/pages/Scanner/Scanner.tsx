@@ -5,10 +5,9 @@ import { RNCamera } from 'react-native-camera'
 import { saveFriend } from '../../Sevices/storage.service'
 import { updateDocument } from '../../Sevices/firestore.service'
 import { auth } from '../../Firebase/firebase.config'
+import { color } from '../../Constants/collectionNames'
 
 const Scanner = () => {
-
-  // TODO ask camera permissions
 
   const [scanner, setScanner] = useState<QRCodeScanner | null>()
 
@@ -16,14 +15,10 @@ const Scanner = () => {
 
   let id = auth.currentUser?.uid
 
-  const onSuccess = (e) => {
+  const onSuccess = (e: { data: React.SetStateAction<{}> }) => {
     let data = JSON.parse(e.data)
-    console.log(JSON.stringify(data.user))
-    // console.log(typeof e.data)
     setScanData(e.data)
     Alert.alert("user added ", data.user.name + " " + data.user.note)
-
-    // e.data.forEach(e => console.log(e))
     updateDocument(id, "friends", data.user).then(() => {
       console.log("updated doc");
     }).catch(error => console.log(error)
@@ -43,8 +38,6 @@ const Scanner = () => {
         }}>
         <Text style={styles.buttonText}>Scan Again</Text>
       </TouchableOpacity>
-
-
     </View>
   )
 }
@@ -53,18 +46,20 @@ export default Scanner
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
   scanAgainButton: {
-    borderWidth: 1,
-    borderRadius: 9,
+    borderRadius: 7,
+    backgroundColor: color,
+    marginBottom: 15
   },
   buttonText: {
     fontWeight: 'bold',
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    color: 'black'
+    fontSize: 15,
+    paddingHorizontal: 50,
+    paddingVertical: 15,
+    color: 'white'
   }
 })

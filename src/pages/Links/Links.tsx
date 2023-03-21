@@ -10,6 +10,7 @@ import { fetchUserDetails } from '../../redux/reducers/user.reducer'
 import { fetchUserLinks } from '../../redux/reducers/links.reducer'
 import { Link } from '../../Interfaces/Link.interface'
 import { Skeleton } from '@rneui/base'
+import Empty from '../../Components/Empty.component'
 
 const Links = () => {
 
@@ -114,6 +115,8 @@ const Links = () => {
               onRefresh={onRefresh}
             />
           }
+          ListEmptyComponent={<Empty text='I dont want to come of
+          passive-aggressive with the vibes but... you got no links'/>}
         />
       </View>
 
