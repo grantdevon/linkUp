@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { auth } from '../../Firebase/firebase.config'
 import Information from '../../Components/Information.component'
@@ -6,7 +6,21 @@ import Information from '../../Components/Information.component'
 const Settings = () => {
 
   const signOut = () => {
-    auth.signOut()
+    Alert.alert(
+      "Confirm",
+      "Are you sure you want to sign out?",
+      [
+        {
+          text: "Yes",
+          onPress: () => auth.signOut()
+        },
+        {
+          text: "No",
+          onPress: () => {}
+        }
+      ]
+      
+    )
   }
   return (
     <View>
