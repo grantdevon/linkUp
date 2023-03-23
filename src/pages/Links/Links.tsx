@@ -115,7 +115,7 @@ const Links = () => {
               onRefresh={onRefresh}
             />
           }
-          ListEmptyComponent={<Empty text='I dont want to come of
+          ListEmptyComponent={<Empty text='I dont want to come off
           passive-aggressive with the vibes but... you got no links'/>}
         />
       </View>
