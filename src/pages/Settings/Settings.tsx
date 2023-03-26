@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, Linking, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { auth } from '../../Firebase/firebase.config'
 import Information from '../../Components/Information.component'
@@ -47,7 +47,7 @@ const Settings = () => {
         message='Im just trying to make enough money so that my girlfriend
       can live her rich girl fantasy'
         text='Buy me a coffee'
-        onPress={signOut}
+        onPress={() => Linking.openURL('https://www.buymeacoffee.com/grantdevon')}
       />
 
       <BasicInfo
