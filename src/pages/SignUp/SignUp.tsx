@@ -70,12 +70,14 @@ const SignUp = ({setSignUp}: {setSignUp: any}) => {
           ...user,
           password: password
         })}
+        secureTextEntry
       />
       <TextInput
         style={styles.input}
         placeholder='confirm password'
         placeholderTextColor={"grey"}
         onChangeText={text => setConfirmPassword(text)}
+        secureTextEntry
       />
       <TextInput
         style={styles.input}
