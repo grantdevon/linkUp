@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react'
 import { login, signUp } from '../../Sevices/auth.service'
 import SignUp from '../SignUp/SignUp'
 import { color } from '../../Constants/collectionNames'
+import Loading from '../../Components/Loading.component'
 
 
 interface ICTAButton {
@@ -57,15 +58,7 @@ const Login = () => {
 
     if (isSigningIn) {
         return (
-            <Modal
-                visible={isSigningIn}
-                animationType='slide'
-            >
-                <View style={styles.signInModal}>
-                    <ActivityIndicator color={color} size={"large"}/>
-                    <Text style={{color: color}}>Signing in...</Text>
-                </View>
-            </Modal>
+            <Loading text='Signing in...' isLoading={isSigningIn}/>
         )
     }
 
@@ -137,10 +130,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold'
     },
-    signInModal: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: color
-    }
+
 })
