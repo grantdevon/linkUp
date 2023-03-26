@@ -1,7 +1,9 @@
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { FC, useState } from 'react'
 import { login, signUp } from '../../Sevices/auth.service'
 import SignUp from '../SignUp/SignUp'
+import { color } from '../../Constants/collectionNames'
+import Loading from '../../Components/Loading.component'
 
 
 interface ICTAButton {
@@ -15,8 +17,10 @@ const Login = () => {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [signUp, setSignUp] = useState<boolean>(false)
+    const [isSigningIn, setIsSigningIn] = useState<boolean>(false)
 
     const loginUser = () => {
+        setIsSigningIn(true)
         login(email, password)
     }
 
@@ -34,7 +38,7 @@ const Login = () => {
                 text === "Sign Up" ? {
                     backgroundColor: "white"
                 } : {
-                    backgroundColor: "#6a4eba"
+                    backgroundColor: color
                 }
                 ]}
                 onPress={onClick}
@@ -42,7 +46,7 @@ const Login = () => {
                 <Text
                     style={[styles.ctaText,
                     text === "Sign Up" ? {
-                        color: "#6a4eba"
+                        color: color
                     } : {
                         color: "white"
                     }
@@ -51,13 +55,20 @@ const Login = () => {
             </TouchableOpacity>
         )
     }
+
+    if (isSigningIn) {
+        return (
+            <Loading text='Signing in...' isLoading={isSigningIn}/>
+        )
+    }
+
     return (
         <View style={styles.container}>
             <Modal
                 visible={signUp}
                 animationType='slide'
             >
-                <SignUp setSignUp={setSignUp}/>
+                <SignUp setSignUp={setSignUp} />
             </Modal>
 
             <TextInput
@@ -79,6 +90,7 @@ const Login = () => {
                 onChangeText={password => setPassword(password)}
                 placeholder='password'
                 placeholderTextColor={"grey"}
+                secureTextEntry
             />
             <CTAButton text='Login' onClick={loginUser} />
             <CTAButton text='Sign Up' onClick={signUpUser} />
@@ -117,5 +129,6 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: 'center',
         fontWeight: 'bold'
-    }
+    },
+
 })

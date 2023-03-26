@@ -6,6 +6,7 @@ import { Skeleton } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
 import FriendsModal from './FriendsModal';
 import { useSelector } from 'react-redux';
+import Empty from '../../Components/Empty.component';
 
 
 const Friends = () => {
@@ -64,7 +65,9 @@ const Friends = () => {
       </Modal>
       <FlatList
         data={friends}
-        renderItem={Item} />
+        renderItem={Item} 
+        ListEmptyComponent={<Empty text='Well this is awkward... you got no friends'/>}
+        />
     </View>
   )
 }

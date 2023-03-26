@@ -1,15 +1,14 @@
-import { FlatList, StyleSheet, Text, View, Modal, TextInput, RefreshControl, ScrollView, Switch, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { FlatList, StyleSheet, Text, View, Modal, RefreshControl, TouchableOpacity, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { auth } from '../../Firebase/firebase.config'
-import { fetchSubCollection } from '../../Sevices/firestore.service'
 import FAB from 'react-native-fab'
 import AddLink from './AddLink'
 import LinkToggle from './LinkToggle.component'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserDetails } from '../../redux/reducers/user.reducer'
 import { fetchUserLinks } from '../../redux/reducers/links.reducer'
 import { Link } from '../../Interfaces/Link.interface'
 import { Skeleton } from '@rneui/base'
+import Empty from '../../Components/Empty.component'
 
 const Links = () => {
 
@@ -17,17 +16,14 @@ const Links = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [toggle, setToggle] = useState<boolean>(false)
   const [link, setLink] = useState<Link>({})
+  const linkLimit: number = 10
 
   let id = auth.currentUser?.uid
 
   const {links, loading} = useSelector(state => state.links)
   const dispatch = useDispatch()
 
-  console.log("links on page",links);
-  
-
   const onRefresh = React.useCallback(() => {
-    console.log("calling")
     setRefreshing(true);
     setTimeout(() => {
       let data = {
@@ -39,6 +35,16 @@ const Links = () => {
       setRefreshing(false);
     }, 3000);
   }, []);
+
+  const addLink = () => {
+    console.log(links.length);
+    
+    if (links.length <= linkLimit - 1) {
+      setAddLinkModal(true)
+    } else {
+      Alert.alert("You have reached your link limit. Sorry!")
+    }
+  }
 
   const editLink = (link: Link) => {
     setLink(link)
@@ -66,14 +72,7 @@ const Links = () => {
               isActive={item.isActive}
 
             />
-
-            {/* <Switch 
-            onValueChange={item.isActive ? false : true}
-            value={item.isActive}
-          /> */}
           </View>
-
-
       </TouchableOpacity>
     )
   }
@@ -114,12 +113,14 @@ const Links = () => {
               onRefresh={onRefresh}
             />
           }
+          ListEmptyComponent={<Empty text='I dont want to come off
+          passive-aggressive with the vibes but... you got no links'/>}
         />
       </View>
 
       <FAB
         buttonColor='#6a4eba'
-        onClickAction={() => setAddLinkModal(true)}
+        onClickAction={addLink}
       />
     </View>
   )

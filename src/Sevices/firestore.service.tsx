@@ -1,6 +1,7 @@
 
-import { arrayUnion, collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore"
+import { collection, doc, getDocs, setDoc } from "firebase/firestore"
 import { db } from "../Firebase/firebase.config"
+import { Users } from "../Constants/collectionNames"
 
 export const createDoc = async (collection: string, docName: string, data: {}) => {
     await setDoc(doc(db, collection, docName), data).then(results => {
@@ -24,7 +25,7 @@ export const fetchDocs = (id: string, path?: string) => {
 
 export const fetchSubCollection = async (id: string, collectionName: string) => {
     let dataArray: [] = []
-    let data = await getDocs(collection(db, "users", id, collectionName))
+    let data = await getDocs(collection(db, Users, id, collectionName))
     data.forEach((doc) => {
         dataArray.push(doc.data())
     })
@@ -33,7 +34,7 @@ export const fetchSubCollection = async (id: string, collectionName: string) => 
 
 export const updateDocument = (id: string, collectionName: string, data: any) => {
     return new Promise(async (resolve, reject) => {
-        await setDoc(doc(db, "users", id, collectionName, data.id), data)
+        await setDoc(doc(db, Users, id, collectionName, data.id), data)
         .then(() => resolve(true)).catch(error => reject(error))
     })
 }

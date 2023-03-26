@@ -1,6 +1,7 @@
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { signUp } from '../../Sevices/auth.service'
+import Loading from '../../Components/Loading.component'
 
 
 const SignUp = ({setSignUp}: {setSignUp: any}) => {
@@ -12,6 +13,8 @@ const SignUp = ({setSignUp}: {setSignUp: any}) => {
     note: ""
   })
   const [confirmPassword, setConfirmPassword] = useState<string>("")
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false)
+
 
   const signUpUser = () => {
     let passwordObj = {
@@ -31,6 +34,12 @@ const SignUp = ({setSignUp}: {setSignUp: any}) => {
   const doPWSmatch = ({ password, confirmPassword }: { password: string, confirmPassword: string }) => {
     return password === confirmPassword
   }
+
+  if (isSigningIn) {
+    return (
+        <Loading text='Signing in...' isLoading={isSigningIn}/>
+    )
+}
 
 
   return (
