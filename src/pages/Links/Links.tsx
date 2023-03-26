@@ -1,12 +1,10 @@
-import { FlatList, StyleSheet, Text, View, Modal, TextInput, RefreshControl, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { FlatList, StyleSheet, Text, View, Modal, RefreshControl, TouchableOpacity, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { auth } from '../../Firebase/firebase.config'
-import { fetchSubCollection } from '../../Sevices/firestore.service'
 import FAB from 'react-native-fab'
 import AddLink from './AddLink'
 import LinkToggle from './LinkToggle.component'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserDetails } from '../../redux/reducers/user.reducer'
 import { fetchUserLinks } from '../../redux/reducers/links.reducer'
 import { Link } from '../../Interfaces/Link.interface'
 import { Skeleton } from '@rneui/base'
@@ -18,6 +16,7 @@ const Links = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [toggle, setToggle] = useState<boolean>(false)
   const [link, setLink] = useState<Link>({})
+  const linkLimit: number = 10
 
   let id = auth.currentUser?.uid
 
@@ -40,7 +39,7 @@ const Links = () => {
   const addLink = () => {
     console.log(links.length);
     
-    if (links.length <= 9) {
+    if (links.length <= linkLimit - 1) {
       setAddLinkModal(true)
     } else {
       Alert.alert("You have reached your link limit. Sorry!")
