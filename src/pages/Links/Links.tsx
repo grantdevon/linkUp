@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View, Modal, TextInput, RefreshControl, ScrollView, Switch, TouchableOpacity } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Modal, TextInput, RefreshControl, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../../Firebase/firebase.config'
 import { fetchSubCollection } from '../../Sevices/firestore.service'
@@ -24,11 +24,7 @@ const Links = () => {
   const {links, loading} = useSelector(state => state.links)
   const dispatch = useDispatch()
 
-  console.log("links on page",links);
-  
-
   const onRefresh = React.useCallback(() => {
-    console.log("calling")
     setRefreshing(true);
     setTimeout(() => {
       let data = {
@@ -40,6 +36,16 @@ const Links = () => {
       setRefreshing(false);
     }, 3000);
   }, []);
+
+  const addLink = () => {
+    console.log(links.length);
+    
+    if (links.length <= 9) {
+      setAddLinkModal(true)
+    } else {
+      Alert.alert("You have reached your link limit. Sorry!")
+    }
+  }
 
   const editLink = (link: Link) => {
     setLink(link)
@@ -67,14 +73,7 @@ const Links = () => {
               isActive={item.isActive}
 
             />
-
-            {/* <Switch 
-            onValueChange={item.isActive ? false : true}
-            value={item.isActive}
-          /> */}
           </View>
-
-
       </TouchableOpacity>
     )
   }
@@ -122,7 +121,7 @@ const Links = () => {
 
       <FAB
         buttonColor='#6a4eba'
-        onClickAction={() => setAddLinkModal(true)}
+        onClickAction={addLink}
       />
     </View>
   )

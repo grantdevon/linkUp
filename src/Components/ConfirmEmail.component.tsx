@@ -6,6 +6,7 @@ import { auth } from '../Firebase/firebase.config';
 import { color } from '../Constants/collectionNames';
 
 const ConfirmEmail = ({setIsVerified}: {setIsVerified: any}) => {
+    
     const sendVerification = () => {
         try {
             sendEmailVerification(auth.currentUser)

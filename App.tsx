@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomePage from './src/pages/HomePage/HomePage';
 import BottomTabNavigator from './src/Navigation/BottomTabNavigator';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './src/Firebase/firebase.config';
@@ -32,8 +31,8 @@ const App = () => {
           id: user.uid, 
           collectionName: 'friends'
         }
-        console.log(user);
         
+        // TODO add function called updateReduxStore for all the dispatch's
         dispatch(fetchFriends(data))
         dispatch(fetchUserLinks({...data, collectionName: "links"}))
         setShowLogin(false)
